@@ -10,11 +10,11 @@ public class PomodoroTimer : MonoBehaviour
 
     private bool hasStarted;
     private double secondsRemaining;
-    private int startSeconds;
+    private DateTime startTime;
     
     public void StartTimer()
     {
-        startSeconds = DateTime.Now.Second;
+        startTime = DateTime.Now;
         secondsRemaining = POMODORO_INTERVAL;
         UpdateText();
         hasStarted = true;
@@ -23,7 +23,6 @@ public class PomodoroTimer : MonoBehaviour
     public void ResetTimer()
     {
         hasStarted = false;
-        startSeconds = 0;
         secondsRemaining = 0;
         UpdateText();
     }
@@ -45,7 +44,7 @@ public class PomodoroTimer : MonoBehaviour
 
     private void TickTime()
     {
-        secondsRemaining = POMODORO_INTERVAL - (DateTime.Now.Second - startSeconds);
+        secondsRemaining = POMODORO_INTERVAL - DateTime.Now.Subtract(startTime).TotalSeconds;
     }
     
     private void UpdateText()
